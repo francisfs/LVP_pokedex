@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../repository/model/pokemon.dart';
 import '../repository/pokemon_repository.dart';
 
@@ -10,8 +11,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Pokemon> pokemonList = [];
-  PokemonRepository _repository = PokemonRepository();
+  
+
   bool carregando = true;
 
   @override
@@ -30,7 +31,9 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: FutureBuilder<List<Pokemon>>(
-          future: PokemonRepository().pegarPokemons(),
+          future: context.read<PokemonRepository>().pegarPokemons(),
+          //contex read e o provider pedindo respository pokemon
+          //conceito de injeção de dependencias
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
