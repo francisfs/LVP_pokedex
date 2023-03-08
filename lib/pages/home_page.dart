@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'repository/model/pokemon.dart';
-import 'detail_pokemon.dart';
+import '../repository/model/pokemon.dart';
+import '../repository/pokemon_repository.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,23 +10,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Pokemon> pokemonList = [];
+  PokemonRepository _repository = PokemonRepository();
+  bool carregando = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 232, 237, 239),
+      backgroundColor: const Color.fromARGB(255, 232, 237, 239),
       appBar: AppBar(
         actions: [
           Image.network(
               'https://raw.githubusercontent.com/RafaelBarbosatec/SimplePokedex/master/assets/pokebola_img.png',
               scale: 22)
         ],
-        shadowColor: Color.fromARGB(255, 3, 12, 192),
+        shadowColor: const Color.fromARGB(255, 3, 12, 192),
         centerTitle: false,
         title: const Text('Pokedex'),
       ),
       body: Center(
         child: FutureBuilder<List<Pokemon>>(
-          future: pegarPokemons(),
+          future: PokemonRepository().pegarPokemons(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
@@ -40,8 +42,6 @@ class _HomePageState extends State<HomePage> {
                     return InkWell(
                       onTap: () {
                         Navigator.of(context).pushNamed('/details');
-                        
-                        
                       },
                       child: Card(
                         child: ListTile(
@@ -62,6 +62,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  
 }

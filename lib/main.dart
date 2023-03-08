@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'detail_pokemon.dart';
-import 'home_page.dart';
+import 'pages/detail_pokemon.dart';
+import 'pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
